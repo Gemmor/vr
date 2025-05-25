@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Aplicació ecológica</title>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <img id="BathroomTexture" src="bathroom3.jpg">
+        <a-asset-item id="spray-obj" src="spray2.glb"></a-asset-item>
+        <a-asset-item id="wc-obj" src="WC.glb"></a-asset-item>
+      </a-assets>
+
+      <a-sky src="#BathroomTexture"></a-sky>
+
+      <a-entity id="spray-model" gltf-model="#spray-obj" position="-7.577 -0.360 -2.482" scale="0.1 0.1 0.1" class="clickable"></a-entity>
+      <a-entity id="wc" gltf-model="#wc-obj" position="-1.075 -1.862 3.063" scale="0.25 0.25 0.25" rotation="0 -45 0" class="clickable"></a-entity>
+
+      
+      <!-- Botons d'informació WC -->
+
+            <a-circle id="wc-boton-info"
+                color="#0c3c46"
+                position="-1.050 1.229 2.310"
+                radius="0.25"
+                visible="false"
+                look-at="#cameraTarget"
+                class="clickable"
+                text="value: Informacio; align: center; color: white; width: 2.1">
+      </a-circle>
+
+      <a-circle id="wc-boton-consejo"
+                color="#2d8495"
+                look-at="#cameraTarget"
+                position="-0.571 1.219 2.729"
+                material="shader: flat"
+                radius="0.25"
+                visible="false"
+                class="clickable"
+                text="value: Consell; align: center; color: white; width: 2.3">
+      </a-circle>
+
+      <a-circle id="wc-boton-accion"
+                color="#156575"
+                look-at="#cameraTarget"
+                position="-1.671 1.180 2.060"
+                radius="0.25"
+                visible="false"
+                class="clickable"
+                text="value: Accio; align: center; color: white; width: 2.3">
+      </a-circle>
+
+      <!-- Fons del text WC -->
+
+      <a-plane id="wc-fondo-texto"
+               rotation = "0 130 0"
+               position="-0.997 2.060 2.312"
+               width="2"
+               height="1"
+               color="#ffffff"
+               opacity="0.8"
+               visible="false">
+      </a-plane>
+
+      <!-- Text wc-->
+      <a-text id="wc-resultado"
+              rotation="0 130 0" 
+              position="-0.997 2.060 2.312"
+              value=""
+              color="#000"
+              align="center"
+              width="1.5">
+      </a-text>
+
+      <!-- llum wc-->
+      <a-circle id="wc-halo"
+                position="-1.749 -2.667 4.161"
+                rotation="0 140 0"
+                scale="1.800 3.760 0.000"
+                radius="0.6"
+                color="#ffff00"
+                opacity="0.2"
+                visible="false">
+      </a-circle>
+
+
+      <!-- Botons d'informació producte -->
+
+            <a-circle id="spray-boton-info"
+                color="#0c3c46"
+                position="-4.644 1.551 -0.697"
+                radius="0.25"
+                visible="false"
+                look-at="#cameraTarget"
+                class="clickable"
+                text="value: Informacio; align: center; color: white; width: 2.1">
+      </a-circle>
+
+      <a-circle id="spray-boton-consejo"
+                color="#2d8495"
+                look-at="#cameraTarget"
+                position="-4.644 1.551 -1.309"
+                material="shader: flat"
+                radius="0.25"
+                visible="false"
+                class="clickable"
+                text="value: Consell; align: center; color: white; width: 2.3">
+      </a-circle>
+
+      <a-circle id="spray-boton-accion"
+                color="#156575"
+                look-at="#cameraTarget"
+                position="-4.644 1.551 -1.904"
+                radius="0.25"
+                visible="false"
+                class="clickable"
+                text="value: Accio; align: center; color: white; width: 2.3">
+      </a-circle>
+
+      <!-- Fons del text producte -->
+
+      <a-plane id="spray-fondo-texto"
+               rotation = "0 90 0"
+               position="-4.654 2.387 -1.287"
+               width="2"
+               height="1"
+               color="#ffffff"
+               opacity="0.8"
+               visible="false">
+      </a-plane>
+
+      <!-- Text producte -->
+      <a-text id="spray-resultado"
+              rotation="0 90 0" 
+              position="-4.654 2.387 -1.287"
+              value=""
+              color="#000"
+              align="center"
+              width="3">
+      </a-text>
+
+      <!-- llum spray-->
+      <a-circle id="spray-halo"
+                position="-7.968 0.080 -2.577"
+                rotation="0 90 0"
+                scale="0.630 1 1"
+                radius="0.6"
+                color="#ffff00"
+                opacity="0.4"
+                visible="false">
+      </a-circle>
+
+      
+
+
+<a-camera id="cameraTarget">
+0  <a-cursor
+    fuse="false"
+    color="#66ffff"
+    raycaster="objects: .clickable">
+  </a-cursor>
+</a-camera>
+    </a-scene>
+
+    <script>
+       //WC
+
+      const wc = document.querySelector('#wc');
+      const wcBotonInfo = document.querySelector('#wc-boton-info');
+      const wcBotonConsejo = document.querySelector('#wc-boton-consejo');
+      const wcBotonAccion = document.querySelector('#wc-boton-accion');
+      const wcResultado = document.querySelector('#wc-resultado');
+      const wcFondoTexto = document.querySelector('#wc-fondo-texto');
+
+      wc.addEventListener('click', () => {
+        wcBotonInfo.setAttribute('visible', true);
+        wcBotonConsejo.setAttribute('visible', true);
+        wcBotonAccion.setAttribute('visible', true);
+      });
+
+      wcBotonInfo.addEventListener('click', () => {
+        wcResultado.setAttribute('value', 'Una descarga gasta entre 6 y 12 litres d\'aigua.');
+        wcFondoTexto.setAttribute('visible', true);
+      });
+      wcBotonConsejo.addEventListener('click', () => {
+        wcResultado.setAttribute('value', 'Utilitza cisterna de doble descarga. \nPots estalviar fins a un 50% d\'aigua.');
+        wcFondoTexto.setAttribute('visible', true);
+      });
+      wcBotonAccion.addEventListener('click', () => {
+        wcResultado.setAttribute('value', 'Instal·lar boto de doble descarga. \nNo tirar productes no degradables ');
+        wcFondoTexto.setAttribute('visible', true);
+      });
+
+      // SPRAY
+      const spray = document.querySelector('#spray-model');
+      const sprayBotonInfo = document.querySelector('#spray-boton-info');
+      const sprayBotonConsejo = document.querySelector('#spray-boton-consejo');
+      const sprayBotonAccion = document.querySelector('#spray-boton-accion');
+      const sprayResultado = document.querySelector('#spray-resultado');
+      const sprayFondoTexto = document.querySelector('#spray-fondo-texto');
+
+      spray.addEventListener('click', () => {
+        sprayBotonInfo.setAttribute('visible', true);
+        sprayBotonConsejo.setAttribute('visible', true);
+        sprayBotonAccion.setAttribute('visible', true);
+      });
+
+      sprayBotonInfo.addEventListener('click', () => {
+        sprayResultado.setAttribute('value', 'Molts envasos de productes\n son de plastic i no es\n reciclen correctament');
+        sprayFondoTexto.setAttribute('visible', true);
+      });
+      sprayBotonConsejo.addEventListener('click', () => {
+        sprayResultado.setAttribute('value', 'Busca productes de neteja\n amb certificacions ecologiques.\n Opta per recarregues en lloc de\n comprar un envas nou.');
+        sprayFondoTexto.setAttribute('visible', true);
+      });
+      sprayBotonAccion.addEventListener('click', () => {
+        sprayResultado.setAttribute('value', 'Canvia a alternatives casolanes:\n solucions de vinagre i llimona\n per netejar superficies.');
+        sprayFondoTexto.setAttribute('visible', true);
+      });
+
+      // LLUMS
+        const wcHalo = document.querySelector('#wc-halo');
+
+        wc.addEventListener('mouseenter', () => {
+          wcHalo.setAttribute('visible', 'true');
+        });
+        wc.addEventListener('mouseleave', () => {
+          wcHalo.setAttribute('visible', 'false');
+        }); 
+
+        const sprayHalo = document.querySelector('#spray-halo');
+
+        spray.addEventListener('mouseenter', () => {
+          sprayHalo.setAttribute('visible', 'true');
+        });
+        spray.addEventListener('mouseleave', () => {
+          sprayHalo.setAttribute('visible', 'false');
+        }); 
+
+    </script>
+  </body>
+</html>

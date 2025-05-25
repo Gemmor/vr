@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Interacción con lámpara</title>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <img id="livingRoomTexture" src="Recursos/livingRoom2.jpg">
+        <a-asset-item id="lamp-obj" src="Recursos/llum2.obj"></a-asset-item>
+        <a-asset-item id="lamp-mtl" src="Recursos/llum2.mtl"></a-asset-item>
+        
+      </a-assets>
+
+      <a-sky src="#livingRoomTexture"></a-sky>
+
+      <!-- objecte llum -->
+      <a-entity id="lampara" obj-model="obj: #lamp-obj; mtl: #lamp-mtl"  position="-3.570 -11.710 -29.830"  scale="0.08 0.08 0.08" rotation= "-90 0 0" class="clickable"></a-entity>
+
+      <!-- Botó informació -->
+
+            <a-circle id="boton-info"
+                color="#0c3c46"
+                look-at="#cameraTarget"
+                position="-1.4 1.6 -3.5"
+                radius="0.25"
+                visible="false"
+                class="clickable"
+                text="value: Informacio; align: center; color: white; width: 2.1">
+      </a-circle>
+
+            <!-- Botó consell -->
+
+      <a-circle id="boton-consejo"
+                color="#2d8495"
+                look-at="#cameraTarget"
+                position="-2 1.6 -3.5"
+                material="shader: flat"
+                radius="0.25"
+                visible="false"
+                class="clickable"
+                text="value: Consell; align: center; color: white; width: 2.3">
+      </a-circle>
+
+      <a-circle id="boton-accion"
+                color="#156575"
+                look-at="#cameraTarget"
+                position="-0.8 1.6 -3.5"
+                radius="0.25"
+                visible="false"
+                class="clickable"
+                text="value: Accio; align: center; color: white; width: 2.3">
+      </a-circle>
+
+      <!-- Fons del text -->
+      <a-plane id="fondo-texto"
+              rotation="0 20 0" 
+               position="-0.8 1 -1.99"
+               width="1"
+               height="0.5"
+               color="#ffffff"
+               opacity="0.8"
+               visible="false">
+      </a-plane>
+
+      <!-- Text -->
+      <a-text id="resultado"
+              rotation="0 20 0" 
+              position="-0.8 1 -1.99"
+              value=""
+              color="#000"
+              align="center"
+              width="1.5">
+      </a-text>
+
+      <!-- llum lampara-->
+      <a-circle id="llum-halo"
+                position="-4.063 -11.352 -68.654"
+                scale="1.240 16.000 1"
+                color="#ffff00"
+                opacity="0.2"
+                visible="false">
+      </a-circle>
+
+
+      <!-- fletxa-->
+      <a-image id="flecha" src="Recursos/arrow.png" position="4 0 2" rotation="90 60 5"  class="clickable"></a-image>
+
+<a-camera id="cameraTarget">
+0  <a-cursor
+    fuse="false"
+    color="#66ffff"
+    raycaster="objects: .clickable">
+  </a-cursor>
+</a-camera>
+    </a-scene>
+
+        <script>
+      const lampara = document.querySelector('#lampara');
+      const botonInfo = document.querySelector('#boton-info');
+      const botonConsejo = document.querySelector('#boton-consejo');
+      const botonAccion = document.querySelector('#boton-accion');
+      const resultado = document.querySelector('#resultado');
+      const fondoTexto = document.querySelector('#fondo-texto');
+
+      lampara.addEventListener('click', () => {
+        console.log("Lámpara clicada");
+        botonInfo.setAttribute('visible', true);
+        botonConsejo.setAttribute('visible', true);
+        botonAccion.setAttribute('visible', true);
+      });
+
+      botonInfo.addEventListener('click', () => {
+        resultado.setAttribute('value', 'Aquesta llum te un \nconsum de 60W.\n Es un gast excessiu.');
+        fondoTexto.setAttribute('visible', true);
+      });
+
+      botonConsejo.addEventListener('click', () => {
+        resultado.setAttribute('value', 'Utilitza una bombeta \nLED de 10W.');
+        fondoTexto.setAttribute('visible', true);
+      });
+
+      botonAccion.addEventListener('click', () => {
+        resultado.setAttribute('value', 'Comprar bombeta LED.');
+        fondoTexto.setAttribute('visible', true);
+      });
+  document.querySelector('#flecha').addEventListener('click', () => {
+        window.location.href = 'Recursos/Bathroom.html';
+  });
+      
+
+      // LLUMS
+        const llumHalo = document.querySelector('#llum-halo');
+
+        lampara.addEventListener('mouseenter', () => {
+          llumHalo.setAttribute('visible', 'true');
+        });
+        lampara.addEventListener('mouseleave', () => {
+          llumHalo.setAttribute('visible', 'false');
+        }); 
+
+
+    </script>
+  </body>
+</html>
